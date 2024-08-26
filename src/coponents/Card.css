@@ -1,0 +1,59 @@
+.image-card {
+    height: 100%;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    max-width: 300px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .image-card__content {
+    height: 90%;
+    cursor: pointer;
+  }
+  
+  .image-card__image-container {
+    width: 100%;
+    height: 85%;
+    overflow: hidden;
+  }
+
+  .image-card__image {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  
+  .image-card__title {
+    font-size: 1.2em;
+    margin: 0.5em 0;
+    text-align: center;
+  }
+  
+  .image-card__actions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .image-card__button {
+    border: none;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1em;
+  }
+  
+  .image-card__button--like {
+    background-color: #28a745; 
+    color: white;
+  }
+  
+  .image-card__button--delete {
+    background-color: #dc3545; 
+    color: white;
+  }
+  

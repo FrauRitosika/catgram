@@ -1,25 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Gallery from './coponents/Gallery';
+import ImageInfo from './coponents/ImageInfo';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export default function App({ images }) {
+
+    const [openedImage, openImage] = useState(null);
+
+    const handleOpenPage = (img) => {
+        openImage(img);
+    };
+
+    return (
+        <div className='app'>
+            <h1>Фотогалерея</h1>
+            {openedImage
+                ? (<ImageInfo image={openedImage}></ImageInfo>)
+                : (<Gallery images={images} cardClick={handleOpenPage}><h2>Котики</h2></Gallery>)
+            }
+        </div>
+    );
+
 }
-
-export default App;
