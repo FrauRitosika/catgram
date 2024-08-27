@@ -1,14 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { HashRouter } from 'react-router-dom';
 import './index.css';
+import { imageList } from './app-data/mapping-imgur-app-data';
 import App from './App';
-import { imageList } from '../src/data/get-data';
-
-console.log(imageList);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App images={imageList} />
+    <HashRouter>
+      <App cards={imageList} />
+    </HashRouter>
   </React.StrictMode>
 );
