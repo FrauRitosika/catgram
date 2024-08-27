@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/catgram/static/css/main.467924bf.css",
-    "main.js": "/catgram/static/js/main.79530747.js",
+    "main.css": "/catgram/static/css/main.93be9c34.css",
+    "main.js": "/catgram/static/js/main.062e0bb0.js",
     "index.html": "/catgram/index.html",
-    "main.467924bf.css.map": "/catgram/static/css/main.467924bf.css.map",
-    "main.79530747.js.map": "/catgram/static/js/main.79530747.js.map"
+    "main.93be9c34.css.map": "/catgram/static/css/main.93be9c34.css.map",
+    "main.062e0bb0.js.map": "/catgram/static/js/main.062e0bb0.js.map"
   },
   "entrypoints": [
-    "static/css/main.467924bf.css",
-    "static/js/main.79530747.js"
+    "static/css/main.93be9c34.css",
+    "static/js/main.062e0bb0.js"
   ]
 }
