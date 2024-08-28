@@ -5,30 +5,34 @@ import { useParams } from "react-router-dom";
 
 interface ImagePageInfo {
     className?: string;
+    post?: PostContent | null;
+    getPost: (id: string) => PostContent | null;
 }
 
-const ImagePage: React.FC<ImagePageInfo> = ({ className = ''}) => {
+const ImagePage: React.FC<ImagePageInfo> = ({ className = '', post, getPost }) => {
 
-    const {postId} = useParams();
+    const { postId } = useParams();
+    post = post ?? postId ? getPost(postId!) : null;
+
+    if (post) {
+        const isHorizontalImg: boolean = post.img.width >= post.img.height ? true : false;
+
+        return (
+            <div className={`${className} image-page`}>
+                <div className="image-page__image-container">
+                    <img className={isHorizontalImg ? 'image-page__image--horizontal' : 'image-page__image--vertical'}
+                        src={post.img.link} alt={post.title} width={isHorizontalImg ? 1400 : ''} height={isHorizontalImg ? '' : 700} />
+                </div>
+                <h2 className="image-page__title">{post.title}</h2>
+            </div>
+        )
+    }
 
     return (
-        <h2>{`Hi ${postId}`}</h2>
+        <div className={`${className} image-page`}>
+            <p>Изображение не найдено</p>
+        </div>
     )
-
-    //Получаем пост с картинкой из стореджа -> делаем гет по http -> редеректим на главную 
-
-    // const isHorizontalImg: boolean = post.img.width >= post.img.height ? true : false;
-
-    // return (
-    //     <div className={`${className} image-page`}>
-    //         <div className="image-page__image-container">
-    //             <img className={isHorizontalImg ? 'image-page__image--horizontal' : 'image-page__image--vertical'}
-    //                 src={post.img.link} alt={post.title} />
-    //         </div>
-    //         <h2 className="image-page__title">{post.title}</h2>
-    //     </div>
-
-    // );
 }
 
 export default ImagePage;

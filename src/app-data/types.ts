@@ -10,6 +10,8 @@ interface PostContent {
     id: string;
     title?: string;
     img: ImageInfo;
+    isLiked: boolean;
+    isDeleted: boolean;
 }
 
 

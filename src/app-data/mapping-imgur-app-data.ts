@@ -1,12 +1,14 @@
-import { ApiGetImageResponse} from '../imgur/get-image';
+import { ApiGetGalleryResponse} from '../imgur/types-image';
 import {PostContent} from './types';
 
-const getImgurGalleryResponse: ApiGetImageResponse = require('./data.json');
+
 // import {getImgurGalleryResponse} from '../imgur/getItemsImgur'
 
-function getImages(response: ApiGetImageResponse): Array<PostContent> {
+export default function getImages(): Array<PostContent> {
 
-    const list = response.data.items.filter(((item, i) => i < 30)).map(item => {
+    const getImgurGalleryResponse: ApiGetGalleryResponse = require('./data.json');
+
+    const list = getImgurGalleryResponse.data.items.filter(((item, i) => i < 30)).map(item => {
         const img = item.images.find(img => ['image/jpeg', 'image/png'].includes(img.type));
         return img ? {
             id: item.id,
@@ -17,13 +19,11 @@ function getImages(response: ApiGetImageResponse): Array<PostContent> {
                 link: img.link,
                 width: img.width,
                 height: img.height
-            }
+            },
+            isLiked: false,
+            isDeleted: false
         } : null;
     }).filter((item,i) => item !== null);
 
     return list;
 }
-
-const imageList = getImages(getImgurGalleryResponse);
-
-export { imageList };

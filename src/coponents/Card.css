@@ -33,18 +33,18 @@
     text-align: center;
   }
   
-  .image-card__actions {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  
   .image-card__button {
     border: none;
     padding: 0.5em 1em;
     cursor: pointer;
     border-radius: 4px;
     font-size: 1em;
+  }
+
+  .image-card__reactions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
   }
   
   .image-card__button--like {
