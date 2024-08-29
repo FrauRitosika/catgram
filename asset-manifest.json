@@ -1,13 +1,18 @@
 {
   "files": {
-    "main.css": "/catgram/static/css/main.93be9c34.css",
-    "main.js": "/catgram/static/js/main.062e0bb0.js",
+    "main.css": "/catgram/static/css/main.41eb7073.css",
+    "main.js": "/catgram/static/js/main.0ea3090c.js",
+    "static/media/logo.svg": "/catgram/static/media/logo.9fafe0a2a9c3e36773ed862018c84ddf.svg",
+    "static/media/filter.svg": "/catgram/static/media/filter.2e111f8a694f1ea60224.svg",
+    "static/media/hidden.svg": "/catgram/static/media/hidden.9aba6d16501d4ddc2ef5.svg",
+    "static/media/like.svg": "/catgram/static/media/like.06d2e57300d10b1a28a3.svg",
     "index.html": "/catgram/index.html",
-    "main.93be9c34.css.map": "/catgram/static/css/main.93be9c34.css.map",
-    "main.062e0bb0.js.map": "/catgram/static/js/main.062e0bb0.js.map"
+    "static/media/back.svg": "/catgram/static/media/back.d174d3122c56cee5847d.svg",
+    "main.41eb7073.css.map": "/catgram/static/css/main.41eb7073.css.map",
+    "main.0ea3090c.js.map": "/catgram/static/js/main.0ea3090c.js.map"
   },
   "entrypoints": [
-    "static/css/main.93be9c34.css",
-    "static/js/main.062e0bb0.js"
+    "static/css/main.41eb7073.css",
+    "static/js/main.0ea3090c.js"
   ]
 }
