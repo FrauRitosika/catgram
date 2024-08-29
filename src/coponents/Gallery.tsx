@@ -26,18 +26,21 @@ const Gallery: React.FC<GalleryData> = ({ className = '', loadGallery, cardClick
     }
 
     function onDelete(post: PostContent) {
-        post.isDeleted = true;
         changePost(post);
-        const newList = postList.filter((item: PostContent) => item.id !== post.id);
+        const newList: Array<PostContent> = post.isDeleted ? postList.filter((item: PostContent) => item.id !== post.id)
+            : [...postList, post];
         setPostList(newList);
         setLikedPostList(chooseLikedPostList(newList));
     }
 
     function onLike(post: PostContent) {
-        post.isLiked = true;
         changePost(post);
-        likedPostList.push(post);
-        setLikedPostList(likedPostList);
+        if (post.isLiked) {
+            setLikedPostList([...likedPostList,post]);
+        } else {
+            setLikedPostList(likedPostList.filter((item: PostContent) => item.id !== post.id));
+        }
+
     }
 
     function getFiltredGallery(): Array<PostContent> {
@@ -49,6 +52,10 @@ const Gallery: React.FC<GalleryData> = ({ className = '', loadGallery, cardClick
 
     function changeFilter(filter: string) {
         setFilter(filter);
+    }
+
+    function contentClick(postId: string, post: PostContent) {
+        cardClick(postId, post);
     }
 
 
@@ -63,7 +70,7 @@ const Gallery: React.FC<GalleryData> = ({ className = '', loadGallery, cardClick
                 <ul className="gallery__card-list">
                     {getFiltredGallery().map(post => (
                         <li key={post.id} className="gallery__card-item">
-                            <Card post={post} contentClick={cardClick} onDelete={onDelete} onLike={onLike}
+                            <Card post={post} contentClick={contentClick} onDelete={onDelete} onLike={onLike}
                             />
                         </li>
                     ))}

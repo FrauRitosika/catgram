@@ -2,7 +2,7 @@
   "strict": true,
   "include": [
     "src"
-  ],
+, "webpack.config.js"  ],
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./build",

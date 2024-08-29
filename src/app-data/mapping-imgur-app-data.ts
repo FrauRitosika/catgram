@@ -1,29 +1,37 @@
-import { ApiGetGalleryResponse} from '../imgur/types-image';
-import {PostContent} from './types';
+import { ApiGetGalleryResponse } from '../imgur/types-image';
+import { PostContent } from './types';
+import getImgurGallery from '../imgur/get-gallery';
 
 
-// import {getImgurGalleryResponse} from '../imgur/getItemsImgur'
+// getImgurGallery() '
 
 export default function getImages(): Array<PostContent> {
 
     const getImgurGalleryResponse: ApiGetGalleryResponse = require('./data.json');
 
-    const list = getImgurGalleryResponse.data.items.filter(((item, i) => i < 30)).map(item => {
-        const img = item.images.find(img => ['image/jpeg', 'image/png'].includes(img.type));
-        return img ? {
-            id: item.id,
-            title: item.title,
-            img: {
-                id: img.id,
-                type: img.type,
-                link: img.link,
-                width: img.width,
-                height: img.height
-            },
-            isLiked: false,
-            isDeleted: false
-        } : null;
-    }).filter((item,i) => item !== null);
+    let list: Array<PostContent> = [];
+
+    getImgurGalleryResponse.data.items
+        .filter(item => item.images && item.images.length)
+        .slice(0, 50).forEach(item => {
+            const img = item.images?.find(img => ['image/jpeg', 'image/png'].includes(img.type));
+            if (img) {
+                list.push({
+                    id: item.id,
+                    title: item.title,
+                    img: {
+                        id: img.id,
+                        type: img.type,
+                        link: img.link,
+                        width: img.width,
+                        height: img.height,
+                    },
+                    isLiked: false,
+                    isDeleted: false
+                });
+            }
+            return null;
+        });
 
     return list;
 }

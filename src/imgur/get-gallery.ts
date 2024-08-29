@@ -19,7 +19,7 @@ const params: RequestParams = {
     }
 };
 
-async function getImgurGallery(params: RequestParams) {
+export default async function getImgurGallery(params: RequestParams) {
 
     const url: string = `${params.url}${params.address.tag}/${params.address.sortType}/all/${params.address.page}`;
     const queryParams: URLSearchParams = new URLSearchParams(params.query);
@@ -37,8 +37,3 @@ async function getImgurGallery(params: RequestParams) {
 
     return result;
 }
-
-const imgurGalleryResponse = getImgurGallery(params);
-
-export { imgurGalleryResponse }
-
