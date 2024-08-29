@@ -11,7 +11,12 @@ const getGallery = (): Array<PostContent> => {
             if (post && post.isDeleted === false) posts.push(post);
         });
     } else {
-        posts = getImages();
+
+        async function getImgurGallery() {
+            posts = await getImages();
+        }
+
+        getImgurGallery();
 
         const gallery: Array<string> = [];
         posts.forEach((post: PostContent) => {

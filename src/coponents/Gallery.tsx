@@ -20,6 +20,7 @@ const Gallery: React.FC<GalleryData> = ({ className = '', loadGallery, cardClick
     const [filter, setFilter] = useState<string>('NONE');
     const [postList, setPostList] = useState<Array<PostContent>>(gallery);
     const [likedPostList, setLikedPostList] = useState<Array<PostContent>>(chooseLikedPostList(gallery));
+    const [isEmpty, setEmpty] = useState<boolean>(gallery.length === 0);
 
     function chooseLikedPostList(gallery: Array<PostContent>): Array<PostContent> {
         return gallery.filter((post: PostContent) => post.isLiked === true);
@@ -31,12 +32,13 @@ const Gallery: React.FC<GalleryData> = ({ className = '', loadGallery, cardClick
             : [...postList, post];
         setPostList(newList);
         setLikedPostList(chooseLikedPostList(newList));
+        setEmpty(newList.length === 0);
     }
 
     function onLike(post: PostContent) {
         changePost(post);
         if (post.isLiked) {
-            setLikedPostList([...likedPostList,post]);
+            setLikedPostList([...likedPostList, post]);
         } else {
             setLikedPostList(likedPostList.filter((item: PostContent) => item.id !== post.id));
         }
@@ -68,12 +70,13 @@ const Gallery: React.FC<GalleryData> = ({ className = '', loadGallery, cardClick
                     <Filter onClick={changeFilter} filterName='LIKED' >LIKED</Filter>
                 </div>
                 <ul className="gallery__card-list">
-                    {getFiltredGallery().map(post => (
+                    {(!isEmpty) && (getFiltredGallery().map(post => (
                         <li key={post.id} className="gallery__card-item">
                             <Card post={post} contentClick={contentClick} onDelete={onDelete} onLike={onLike}
                             />
                         </li>
-                    ))}
+                    )))}
+                    {(isEmpty) && (<p>{'Не нашли картинок для отображения :('}</p>)}
                 </ul>
             </div>
         </div>

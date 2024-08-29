@@ -45,7 +45,7 @@ interface DataResponse {
 }
 
 interface ApiGetGalleryResponse {
-    data: DataResponse;
+    data?: DataResponse;
     success: boolean;
     status: number;
 }

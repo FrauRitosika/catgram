@@ -1,37 +1,39 @@
 import { ApiGetGalleryResponse } from '../imgur/types-image';
 import { PostContent } from './types';
-import getImgurGallery from '../imgur/get-gallery';
+import { fetchData } from '../imgur/get-gallery';
 
 
-// getImgurGallery() '
+export default async function getImages(): Promise<Array<PostContent>> {
 
-export default function getImages(): Array<PostContent> {
+    const getImgurGalleryResponse: ApiGetGalleryResponse | null = await fetchData();
 
-    const getImgurGalleryResponse: ApiGetGalleryResponse = require('./data.json');
+    console.log(getImgurGalleryResponse);
 
     let list: Array<PostContent> = [];
 
-    getImgurGalleryResponse.data.items
-        .filter(item => item.images && item.images.length)
-        .slice(0, 50).forEach(item => {
-            const img = item.images?.find(img => ['image/jpeg', 'image/png'].includes(img.type));
-            if (img) {
-                list.push({
-                    id: item.id,
-                    title: item.title,
-                    img: {
-                        id: img.id,
-                        type: img.type,
-                        link: img.link,
-                        width: img.width,
-                        height: img.height,
-                    },
-                    isLiked: false,
-                    isDeleted: false
-                });
-            }
-            return null;
-        });
+    if (!!getImgurGalleryResponse?.data) {
+        getImgurGalleryResponse.data.items
+            .filter(item => item.images && item.images.length)
+            .slice(0, 50).forEach(item => {
+                const img = item.images?.find(img => ['image/jpeg', 'image/png'].includes(img.type));
+                if (img) {
+                    list.push({
+                        id: item.id,
+                        title: item.title,
+                        img: {
+                            id: img.id,
+                            type: img.type,
+                            link: img.link,
+                            width: img.width,
+                            height: img.height,
+                        },
+                        isLiked: false,
+                        isDeleted: false
+                    });
+                }
+                return null;
+            });
 
-    return list;
+        return list;
+    } else { return [] }
 }
