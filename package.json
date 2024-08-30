@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "homepage": "https://frauritosika.github.io/catgram",
+  "type": "module",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -32,6 +33,7 @@
     "production": [
       ">0.2%",
       "not dead",
+      "ie 11",
       "not op_mini all"
     ],
     "development": [

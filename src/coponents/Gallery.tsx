@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Card from "./Card";
 import Filter from "./Filter";
 import './Gallery.css';
@@ -7,7 +7,7 @@ import { PostContent } from '../app-data/types';
 
 interface GalleryData {
     className?: string;
-    loadGallery: () => PostContent[];
+    loadGallery: () => Promise<PostContent[]>;
     cardClick: (postId: string, post?: PostContent) => void;
     children: React.ReactNode;
     changePost: (post: PostContent) => void;
@@ -15,12 +15,25 @@ interface GalleryData {
 
 const Gallery: React.FC<GalleryData> = ({ className = '', loadGallery, cardClick, children, changePost }) => {
 
-    const gallery = loadGallery();
 
     const [filter, setFilter] = useState<string>('NONE');
-    const [postList, setPostList] = useState<Array<PostContent>>(gallery);
-    const [likedPostList, setLikedPostList] = useState<Array<PostContent>>(chooseLikedPostList(gallery));
-    const [isEmpty, setEmpty] = useState<boolean>(gallery.length === 0);
+    const [isLoading, setLoading] = useState<boolean>(true);
+    const [postList, setPostList] = useState<Array<PostContent>>([]);
+    const [likedPostList, setLikedPostList] = useState<Array<PostContent>>([]);
+    const [isEmpty, setEmpty] = useState<boolean>(true);
+
+    const fetchData = useCallback(async () => {
+        const data = await loadGallery();
+        setPostList(data);
+        setLikedPostList(chooseLikedPostList(data));
+        setLoading(false);
+        setEmpty(data.length === 0);
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        fetchData()
+    }, [fetchData]);
 
     function chooseLikedPostList(gallery: Array<PostContent>): Array<PostContent> {
         return gallery.filter((post: PostContent) => post.isLiked === true);
@@ -60,27 +73,29 @@ const Gallery: React.FC<GalleryData> = ({ className = '', loadGallery, cardClick
         cardClick(postId, post);
     }
 
-
-
     return (
         <div className={`${className} container`}>
             {children}
             <div className="gallery">
-                <div className="gallery__filter-bar">
-                    <Filter onClick={changeFilter} filterName='LIKED' >LIKED</Filter>
-                </div>
-                <ul className="gallery__card-list">
-                    {(!isEmpty) && (getFiltredGallery().map(post => (
-                        <li key={post.id} className="gallery__card-item">
-                            <Card post={post} contentClick={contentClick} onDelete={onDelete} onLike={onLike}
-                            />
-                        </li>
-                    )))}
-                    {(isEmpty) && (<p>{'Не нашли картинок для отображения :('}</p>)}
-                </ul>
+                {(isLoading) && (<p>Loading...</p>)}
+                {(!isLoading) && (!isEmpty) &&
+                    (<>
+                        <div className="gallery__filter-bar">
+                            <Filter onClick={changeFilter} filterName='LIKED' >LIKED</Filter>
+                        </div>
+                        <ul className="gallery__card-list">
+                            {getFiltredGallery().map(post => (
+                                <li key={post.id} className="gallery__card-item">
+                                    <Card post={post} contentClick={contentClick} onDelete={onDelete} onLike={onLike} />
+                                </li>
+                            ))}
+                        </ul>
+                    </>
+                    )}
+                {(!isLoading) && (isEmpty) && (<p>Couldn't find a picture to view {':('}</p>)}
             </div>
         </div>
     );
 }
 
-export default Gallery
+export default Gallery;

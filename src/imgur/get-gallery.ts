@@ -38,9 +38,8 @@ async function getImgurGallery(params: RequestParams) {
     return result;
 }
 
-async function fetchData() {
-    const responseApiImgur: ApiGetGalleryResponse | null = await getImgurGallery(params);
-    return responseApiImgur;
+const getImgurGalleryWithPreset = () => {
+    return getImgurGallery(params);
 }
 
-export {fetchData};
+export default getImgurGalleryWithPreset;
