@@ -12,10 +12,14 @@ interface ImagePageInfo {
     changePost: (post: PostContent) => void;
 }
 
-const ImagePage: React.FC<ImagePageInfo> = ({ className = '', post, getPost, back, changePost }) => {
+type Params = {
+    postId?: string;
+  }
 
+const ImagePage: React.FC<ImagePageInfo> = ({ className = '', post, getPost, back, changePost }) => {
+    const { postId } = useParams<Params>();
     useEffect(() => { window.scrollTo(0, 0) });
-    const { postId } = useParams();
+    
 
     post = post ?? postId ? getPost(postId!) : null;
 
@@ -35,9 +39,7 @@ const ImagePage: React.FC<ImagePageInfo> = ({ className = '', post, getPost, bac
                 <p className="back-link__text">Gallery</p>
             </div>
             {(!!post) && (<ImageCard post={post} onLike={onLike} onDelete={onDelete}/>)}
-            {(!post) && (<p>Изображение не найдено</p>)
-            }
-
+            {(!post) && (<p>Изображение не найдено</p>)}
         </div>
     )
 }

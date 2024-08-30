@@ -1,7 +1,7 @@
 import { PostContent } from './types'
 import getImages from './mapping-imgur-app-data';
 
-const getGallery = (): Array<PostContent> => {
+const getGallery = async () => {
     let posts: Array<PostContent> = [];
     const localPosts: Array<string> | null = localStorage.getItem('gallery') ? JSON.parse(localStorage.getItem('gallery')!).postIds : null;
 
@@ -12,19 +12,17 @@ const getGallery = (): Array<PostContent> => {
         });
     } else {
 
-        async function getImgurGallery() {
-            posts = await getImages();
-        }
+        await getImages().then(res => {
+            posts = res;
+            const gallery: Array<string> = [];
+            posts.forEach((post: PostContent) => {
+                const id = `post_${post.id}`
+                gallery.push(id);
+                localStorage.setItem(id, JSON.stringify(post));
+            })
+            if (gallery.length > 0) localStorage.setItem('gallery', JSON.stringify({ postIds: gallery }));
 
-        getImgurGallery();
-
-        const gallery: Array<string> = [];
-        posts.forEach((post: PostContent) => {
-            const id = `post_${post.id}`
-            gallery.push(id);
-            localStorage.setItem(id, JSON.stringify(post));
-        })
-        if (gallery.length > 0) localStorage.setItem('gallery', JSON.stringify({ postIds: gallery }));
+        }, err => { });
     }
 
     return posts;

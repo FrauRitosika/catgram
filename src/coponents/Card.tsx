@@ -1,4 +1,4 @@
-import React, { RefObject, useRef, useState } from "react";
+import React, { RefObject, useEffect, useRef, useState } from "react";
 import ButtonReaction from "./ButtonReaction";
 import './Card.css';
 import { PostContent } from '../app-data/types';
@@ -32,12 +32,11 @@ const Card: React.FC<CardInfo> = ({ post, className = '', contentClick, onDelete
         contentClick(post.id, post);
     }
 
-
     return (
         <div className={`${className} image-card`} >
             <div className="image-card__content" onClick={handleClick}>
                 <div className="image-card__image-container">
-                    <img className="image-card__image" src={post.img.link} alt={post.title} width={320} />
+                    <img className="image-card__image" src={post.img.link} onError={() => {}} onLoad={() => {}} alt={post.title} width={320} />
                 </div>
                 <p className="image-card__title">{post.title}</p>
             </div>

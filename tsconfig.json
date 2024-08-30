@@ -2,12 +2,13 @@
   "strict": true,
   "include": [
     "src"
-, "webpack.config.js"  ],
+  ],
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./build",
-    "target": "es2016",
-    "module": "commonjs",
+    "target": "es2017",
+    "module": "es2022",
+    "moduleResolution": "node",
     "jsx": "react",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,

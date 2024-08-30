@@ -1,39 +1,36 @@
-import { ApiGetGalleryResponse } from '../imgur/types-image';
 import { PostContent } from './types';
-import { fetchData } from '../imgur/get-gallery';
+import getImgurGalleryWithPreset from '../imgur/get-gallery';
 
 
-export default async function getImages(): Promise<Array<PostContent>> {
+export default async function getImages() {
 
-    const getImgurGalleryResponse: ApiGetGalleryResponse | null = await fetchData();
+    const list: Array<PostContent> = [];
 
-    console.log(getImgurGalleryResponse);
+    await getImgurGalleryWithPreset().then(res => {
+        if (!!res.data && res.success) {
+            res.data.items.filter(item => item.images && item.images.length)
+                .slice(0, 50).forEach(item => {
+                    const img = item.images?.find(img => ['image/jpeg', 'image/png'].includes(img.type));
+                    if (img) {
+                        list.push({
+                            id: item.id,
+                            title: item.title,
+                            img: {
+                                id: img.id,
+                                type: img.type,
+                                link: img.link,
+                                width: img.width,
+                                height: img.height,
+                            },
+                            isLiked: false,
+                            isDeleted: false
+                        });
+                    }
+                    return null;
+                });
+        }
+    }, err => { });
 
-    let list: Array<PostContent> = [];
+    return list;
 
-    if (!!getImgurGalleryResponse?.data) {
-        getImgurGalleryResponse.data.items
-            .filter(item => item.images && item.images.length)
-            .slice(0, 50).forEach(item => {
-                const img = item.images?.find(img => ['image/jpeg', 'image/png'].includes(img.type));
-                if (img) {
-                    list.push({
-                        id: item.id,
-                        title: item.title,
-                        img: {
-                            id: img.id,
-                            type: img.type,
-                            link: img.link,
-                            width: img.width,
-                            height: img.height,
-                        },
-                        isLiked: false,
-                        isDeleted: false
-                    });
-                }
-                return null;
-            });
-
-        return list;
-    } else { return [] }
 }
