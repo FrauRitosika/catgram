@@ -23,7 +23,7 @@
 ### Установка
 
 1. Склонируйте репозиторий:
-   `git clone https://github.com/ваш-логин/ваш-репозиторий.git`
+   `git clone https://github.com/FrauRitosika/catgram.git`
 
 2. Перейдите в каталог проекта:
    `cd ваш-репозиторий`
